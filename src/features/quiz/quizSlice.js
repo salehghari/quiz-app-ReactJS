@@ -8,6 +8,7 @@ const initialState = {
       questionType: ``,
       amountOfQuestions: 20
     },
+    settingIsShown: true,
     questions: [],
     answerSelected: false,
     canNotStart: false,
@@ -53,6 +54,9 @@ export const quizSlice = createSlice({
     setTriedToStart: (state, action) => {
       state.triedToStart = action.payload;
     },
+    setSettingIsShown: (state, action) => {
+      state.settingIsShown = action.payload;
+    },
   },
 })
 
@@ -67,7 +71,8 @@ export const {
   setIndex,
   setAnswerSelected,
   setCanNotStart,
-  setTriedToStart
+  setTriedToStart,
+  setSettingIsShown
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

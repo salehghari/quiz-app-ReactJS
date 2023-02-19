@@ -15,7 +15,6 @@ export default function Question() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [options, setOptions] = useState([]);
   const score = useSelector(state => state.quiz.score);
-  const questionAmount = useSelector(state => state.quiz.quiz.amountOfQuestions);
   const encodedQuestions = useSelector(state => state.quiz.questions);
   const answerSelected = useSelector(state => state.quiz.answerSelected);
   const triedToStart = useSelector(state => state.quiz.triedToStart);
@@ -55,7 +54,7 @@ export default function Question() {
     if(answerSelected) {
       return;
     }
-    if (questionIndex + 1 === questionAmount) {
+    if (questionIndex >= 1) {
       dispatch(
         setTriedToStart(false)
       );

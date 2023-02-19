@@ -4,20 +4,24 @@ import Settings from './components/Settings';
 import StartButton from './components/StartButton';
 import QuitButton from './components/QuitButton';
 
-import { useSelector } from 'react-redux'
-import { useState } from 'react';
+import { setSettingIsShown } from './features/quiz/quizSlice';
+
+import { useDispatch, useSelector } from 'react-redux'
 
 import './style.css';
 
 export default function App() {
-  const [isShown, setIsShown] = useState(true);
+  const dispatch = useDispatch();
 
+  const settingIsShown = useSelector((state) => state.quiz.settingIsShown);
   const encodedQuestions = useSelector((state) => state.quiz.questions);
   const questionIndex = useSelector((state) => state.quiz.index);
   const question = encodedQuestions[questionIndex];
 
   const showHideSettings = () => {
-    setIsShown(prev => !prev)
+    dispatch(
+      setSettingIsShown(!settingIsShown)
+    )
   }
   return (
     <div className="App">
@@ -30,8 +34,8 @@ export default function App() {
           Any Bug?! <span style={{color: "#565eff"}}>DM me please!</span> {`<3`}
         </div>
       </a>
-      {question && <HideSettingBtn text={ isShown ? "Hide" : "Show" } onClick={ showHideSettings } />}
-      <Settings isShown={ isShown } />
+      {question && <HideSettingBtn text={ settingIsShown ? "Hide" : "Show" } onClick={ showHideSettings } />}
+      <Settings isShown={ settingIsShown } />
       <Questions />
       <div className="action-buttons">
         <StartButton />

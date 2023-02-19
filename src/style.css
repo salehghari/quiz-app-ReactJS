@@ -56,6 +56,7 @@ ul {
   grid-row-gap: 20px;
 }
 .answer {
+  position: relative;
   border: 1px solid #d7dfff;
   border-radius: 6px;
   min-width: 200px;
@@ -63,6 +64,30 @@ ul {
   transition: border-color .4s;
   background: linear-gradient(90deg, #fff, transparent 50%, #fff);
   cursor: pointer;
+}
+.answer:nth-child(2n - 1)::after,
+.answer:nth-child(3)::before,
+.answer:nth-child(4)::after {
+  position: absolute;
+  border: 1px dashed #565eff;
+  z-index: -1;
+  opacity: .5;
+}
+
+/* for horizontal lines */
+.answer:nth-child(2n - 1)::after {
+  content: '';
+  left: 100%;
+  top: 50%;
+  width: 22px;
+}
+/* for vertical lines */
+.answer:nth-child(3)::before,
+.answer:nth-child(4)::after {
+  content: '';
+  left: 50%;
+  top: -22px;
+  height: 22px;
 }
 .answer:hover:not(.correct, .selected) {
   border-color: #9297ff;

@@ -67,6 +67,6 @@ export default function StartButton() {
   }
 
   return (
-    <button className={`primary-button my-3 py-1 ${canNotStart ? "shake-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>Start</button>
+    <button className={`primary-button my-3 py-1 ${canNotStart ? "shakeX-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>Start</button>
   );
 }
