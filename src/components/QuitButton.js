@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function QuitButton() {
 
-  const settingIsShown = useSelector(state => state.quiz.settingIsShown) 
+  const settingIsShown = useSelector(state => state.quiz.settingIsShown);
 
   const dispatch = useDispatch();
   
@@ -12,7 +12,7 @@ export default function QuitButton() {
     dispatch(
       setQuestions([])
     );
-
+    
     dispatch(
       setTriedToStart(false)
     );

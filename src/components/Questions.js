@@ -15,6 +15,8 @@ export default function Question() {
   const [goodSentence, setGoodSentence] = useState("");
   const [badSentence, setBadSentence] = useState("");
 
+  const [difficultyTextColor, setDifficultyTextColor] = useState("");
+
   const [questions, setQuestions] = useState([]);
   const [animation, setAnimation] = useState("");
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -35,7 +37,7 @@ export default function Question() {
         incorrect_answers: q.incorrect_answers.map(a => decodeHTML(a))
       }
     })
-    setQuestions(decodedQuestions)
+    setQuestions(decodedQuestions);
   }, [encodedQuestions])
   
   const questionIndex = useSelector(state => state.quiz.index);
@@ -54,13 +56,27 @@ export default function Question() {
     let answers = [...question.incorrect_answers]
     answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer)
     setOptions(answers)
+
+    if(question.difficulty === "hard") {
+      setDifficultyTextColor("#dc6060");
+    }
+    if(question.difficulty === "medium") {
+      setDifficultyTextColor("#565eff");
+    }
+    if(question.difficulty === "easy") {
+      setDifficultyTextColor("#309b2c");
+    }
   }, [question])
+  
+  const difficultyTextStyle = {
+    color: difficultyTextColor
+  }
 
   const handleListItemClick = (event) => {
     if(answerSelected) {
       return;
     }
-    if (questionIndex >= 1) {
+    if (questionIndex >= 0) {
       dispatch(
         setTriedToStart(false)
       );
@@ -121,7 +137,7 @@ export default function Question() {
   if (!question) {
     return;
   }
-  
+
   return (
     <div className={`questions-section my-3 ${animation}`}>
       <p>Question <span className="number-of-questions">{questionIndex + 1}</span> Of <span className="number-of-questions">{questions.length}</span></p>
@@ -135,6 +151,10 @@ export default function Question() {
           ))
         }
       </ul>
+      <div>Category: {question.category}</div>
+      <div>
+        Difficulty: <span style={difficultyTextStyle}>{question.difficulty}</span>
+      </div>
       <div className="d-flex justify-content-between">
         <div>
           Score: {score} / {questions.length}

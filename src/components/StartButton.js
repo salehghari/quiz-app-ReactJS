@@ -9,9 +9,11 @@ export default function StartButton() {
   const questionAmount = useSelector(state => state.quiz.quiz.amountOfQuestions);
   const answerSelected = useSelector(state => state.quiz.answerSelected);
   const canNotStart = useSelector(state => state.quiz.canNotStart);
-  const triedToStart = useSelector(state => state.quiz.triedToStart);
+  const questions = useSelector(state => state.quiz.questions);
+  const questionIndex = useSelector(state => state.quiz.index);
+  const question = questions[questionIndex];
 
-  
+
   
   const dispatch = useDispatch();
 
@@ -67,8 +69,8 @@ export default function StartButton() {
       );
     }, 400)
   }
-
+  
   return (
-    <button className={`primary-button my-3 py-1 ${canNotStart ? "shakeX-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>{triedToStart ? "Start Again" : "Start"}</button>
+    <button className={`primary-button my-3 py-1 ${canNotStart ? "shakeX-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>{question ? "Start Again" : "Start"}</button>
   );
 }
