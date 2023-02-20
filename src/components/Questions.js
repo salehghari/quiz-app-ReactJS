@@ -10,10 +10,16 @@ const decodeHTML = function (html) {
 }
 
 export default function Question() {
+  const goodSentencesList = ["Nice!", "Nailed It!", "Wow!", "Good Job!", "Great!", "Well Done!"];
+  const badSentencesList = ["Nope!", "0 IQ!", "Why? That Was Easy!", "You Stupid!", "Kidding Me?", "WTF?!", "Read Some Book For Sure!"];
+  const [goodSentence, setGoodSentence] = useState("");
+  const [badSentence, setBadSentence] = useState("");
+
   const [questions, setQuestions] = useState([]);
   const [animation, setAnimation] = useState("");
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [options, setOptions] = useState([]);
+
   const score = useSelector(state => state.quiz.score);
   const encodedQuestions = useSelector(state => state.quiz.questions);
   const answerSelected = useSelector(state => state.quiz.answerSelected);
@@ -66,6 +72,10 @@ export default function Question() {
 
     if (event.target.textContent === answer) {
       dispatch(setScore(score + 1))
+      setGoodSentence(goodSentencesList[getRandomInt(goodSentencesList.length)])
+    }
+    if (event.target.textContent !== answer) {
+      setBadSentence(badSentencesList[getRandomInt(badSentencesList.length)])
     }
     if (questionIndex + 1 <= questions.length ) {
       setTimeout(() => {
@@ -80,6 +90,8 @@ export default function Question() {
         if (event.target.textContent === answer) {
           setAnimation("shakeY-animation");
         }
+        setGoodSentence("");
+        setBadSentence("");
       }, 2500)
       setAnimation("");
     }
@@ -130,6 +142,9 @@ export default function Question() {
         <div>
           {questionIndex !== 0 ? `Average Score: ${(Math.round((score / questionIndex) * 10000) / 100).toFixed(2)}%` : "0.00%"}
         </div>
+      </div>
+      <div className={`message d-flex justify-content-center my-2 ${ goodSentence || badSentence ? "" : "d-none"}`}>
+        { goodSentence ? goodSentence : badSentence}
       </div>
       <div className="progress-bar">
         <div style={{width: `${(questionIndex + 1) * 100 / questions.length }%`}} className="active-progress-bar transition2"></div>

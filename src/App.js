@@ -26,13 +26,8 @@ export default function App() {
   return (
     <div className="App">
       <h1 style={{margin: "8px 0 4px 0"}}>Quiz App</h1>
-      <a href="https://www.instagram.com/salehghari" className="link subtitle-effect my-2">
-        <div className="first">
-          Any Bug?! <span style={{color: "#565eff"}}>DM me please!</span> {`<3`}
-        </div>
-        <div className="second">
-          Any Bug?! <span style={{color: "#565eff"}}>DM me please!</span> {`<3`}
-        </div>
+      <a href="https://www.instagram.com/salehghari" className="link my-2">
+        Any Bug?! <span style={{color: "#565eff"}}>DM me please!</span> {`<3`}
       </a>
       {question && <HideSettingBtn text={ settingIsShown ? "Hide" : "Show" } onClick={ showHideSettings } />}
       <Settings isShown={ settingIsShown } />

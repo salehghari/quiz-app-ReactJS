@@ -26,27 +26,40 @@ ul {
   list-style: none;
 }
 
-.subtitle-effect {
-  overflow: hidden;
-  position: relative;
-  display: inline-flex;
+.link {
+  color: currentColor;
 }
-.subtitle-effect div.first {
-  animation: firstTextMoving 4s linear infinite;
-}
-.subtitle-effect div.second {
-  animation: secondTextMoving 4s linear infinite;
-  animation-delay: 2s;
-  visibility: hidden;
-}
-.subtitle-effect::after {
-  content: '';
+
+.Blobs {
   width: 100%;
-  height: 100%;    
+  height: 100%;
   position: absolute;
-  left: 0;
+}
+.Blobs svg {
+  width: 300px;
+  position: absolute;
+  z-index: -1;
+}
+
+.Blobs svg:nth-child(1) {
+  width: 200px;
+  left: -10%;
   top: 0;
-  background: linear-gradient(90deg, #fff, transparent 50%, #fff);
+}
+.Blobs svg:nth-child(2) {
+  width: 230px;
+  left: 60%;
+  top: 50%;
+}
+.Blobs svg:nth-child(3) {
+  width: 210px;
+  left: 30%;
+  top: 20%;
+}
+.Blobs svg:nth-child(4) {
+  width: 190px;
+  left: 30%;
+  top: -10%;
 }
 
 .answers {
@@ -78,7 +91,6 @@ ul {
 .answer:nth-child(2n - 1)::after {
   content: '';
   left: 100%;
-  top: 50%;
   width: 22px;
 }
 /* for vertical lines */
@@ -165,6 +177,16 @@ button {
 
 .icon {
   width: 25px;
+}
+
+.message {
+  animation: appearMessage .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  border-radius: 4px;
+  padding: 6px 0;
+  font-weight: 500;
+  background: linear-gradient(90deg, #565eff1a, #d9dbff 50%, #565eff1a);
+  box-shadow: 0px 0px 20px 0px #cfd1ff;
+  color: #565eff;
 }
 
 .questions-section {
@@ -278,11 +300,34 @@ button {
   }
 }
 
+@keyframes appearMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .answers {
     grid-template-columns: auto;
   }
   .questions-section {
     min-width: 244px;
+  }
+  /* for vertical lines */
+  .answer:nth-child(1)::after {
+    content: '';
+    left: 50%;
+    bottom: -22px;
+    height: 22px;
+    width: 0;
+  }
+  .answer:nth-child(3)::after {
+    content: '';
+    display: none;
   }
 }
