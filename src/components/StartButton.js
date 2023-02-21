@@ -71,6 +71,6 @@ export default function StartButton() {
   }
   
   return (
-    <button className={`primary-button my-3 py-1 ${canNotStart ? "shakeX-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>{question ? "Start Again" : "Start"}</button>
+    <button className={`primary-button main-color my-3 py-1 ${canNotStart ? "shakeX-animation" : ""}`} onClick={!answerSelected ? handleQuery : notClickable}>{question ? "Start Again" : "Start"}</button>
   );
 }

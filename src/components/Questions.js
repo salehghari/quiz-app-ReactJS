@@ -140,7 +140,7 @@ export default function Question() {
 
   return (
     <div className={`questions-section my-3 ${animation}`}>
-      <p>Question <span className="number-of-questions">{questionIndex + 1}</span> Of <span className="number-of-questions">{questions.length}</span></p>
+      <p>Question <span className="main-color">{questionIndex + 1}</span> Of <span className="main-color">{questions.length}</span></p>
       <h4 className="fs-4 mb-3">{question.question}</h4>
       <ul className="answers p-0">
         {
@@ -151,19 +151,19 @@ export default function Question() {
           ))
         }
       </ul>
-      <div>Category: {question.category}</div>
+      <div>Category: <span className="fw-500 main-color">{question.category}</span></div>
       <div>
         Difficulty: <span style={difficultyTextStyle}>{question.difficulty}</span>
       </div>
       <div className="d-flex justify-content-between">
         <div>
-          Score: {score} / {questions.length}
+          Score: {score} <span className="main-color">/</span> {questions.length}
         </div>
         <div>
-          {questionIndex !== 0 ? `Average Score: ${(Math.round((score / questionIndex) * 10000) / 100).toFixed(2)}%` : "0.00%"}
+          {questionIndex !== 0 ? `Average Score: ${(Math.round((score / (questionIndex + 1)) * 10000) / 100).toFixed(2)}%` : "0.00%"}
         </div>
       </div>
-      <div className={`message d-flex justify-content-center my-2 ${ goodSentence || badSentence ? "" : "d-none"}`}>
+      <div className={`message py-2 main-color d-flex justify-content-center my-2 ${ goodSentence || badSentence ? "" : "d-none"}`}>
         { goodSentence ? goodSentence : badSentence}
       </div>
       <div className="progress-bar">

@@ -55,7 +55,7 @@ export default function Settings({ isShown }) {
     
   if (!loading) {
     return (
-      <div className={isShown ? "opacity-1 transition4" : "hiddenSettings transition2"}>
+      <div className={isShown ? "opacity-1 settings-sections" : "hiddenSettings transition2"}>
         <div>
           <h4 className="settings-texts">Select Category:</h4>
           <div className="d-flex justify-content-center">
@@ -102,9 +102,12 @@ export default function Settings({ isShown }) {
   }
   if(loading) {
     return (
-      <p>
-        LOADING...
-      </p>
+      <div className="loader mt-1">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     );
   }
 }
