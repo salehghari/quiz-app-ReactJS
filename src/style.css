@@ -7,10 +7,6 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-body {
-  width: 100vw;
-  height: 100vh;
-}
 #root {
   display: flex;
   justify-content: center;
@@ -171,7 +167,18 @@ button {
   border-color: #9297ff;
 }
 option:nth-child(2n - 1) {
-  background-color: #e6ebff;
+  background-color: #dee5ff;
+}
+
+input[type=number] {
+  position: relative; 
+}
+input[type=number]::-webkit-outer-spin-button, 
+input[type=number]::-webkit-inner-spin-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
 }
 
 .icon {
@@ -365,5 +372,8 @@ option:nth-child(2n - 1) {
   .answer:nth-child(3)::after {
     content: '';
     display: none;
+  }
+  .blob {
+    width: 35vw;
   }
 }

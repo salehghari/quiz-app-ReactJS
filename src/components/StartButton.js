@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { changeLoading, setQuestions, setCanNotStart, setScore, setIndex, setTriedToStart } from '../features/quiz/quizSlice';
+import { changeLoading, setQuestions, setCanNotStart, setScore, setIndex, setTriedToStart, setAnsweredAllQuestions } from '../features/quiz/quizSlice';
 
 export default function StartButton() {
 
@@ -34,6 +34,9 @@ export default function StartButton() {
     dispatch(
       setTriedToStart(true)
     );
+    dispatch(
+      setAnsweredAllQuestions(false)
+    )
     
     let apiUrl = `https://opentdb.com/api.php?amount=${questionAmount}`;
 

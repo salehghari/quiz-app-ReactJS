@@ -14,7 +14,9 @@ const initialState = {
     canNotStart: false,
     index: 0,
     score: 0,
-    triedToStart: false
+    triedToStart: false,
+    answeredAllQuestions: false,
+    timeLeft: 0
   }
 
 export const quizSlice = createSlice({
@@ -57,6 +59,12 @@ export const quizSlice = createSlice({
     setSettingIsShown: (state, action) => {
       state.settingIsShown = action.payload;
     },
+    setAnsweredAllQuestions: (state, action) => {
+      state.answeredAllQuestions = action.payload;
+    },
+    setTimeLeft: (state, action) => {
+      state.timeLeft = action.payload;
+    },
   },
 })
 
@@ -72,7 +80,9 @@ export const {
   setAnswerSelected,
   setCanNotStart,
   setTriedToStart,
-  setSettingIsShown
+  setSettingIsShown,
+  setAnsweredAllQuestions,
+  setTimeLeft
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

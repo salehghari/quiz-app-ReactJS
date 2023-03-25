@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAnswerSelected, setScore, setIndex, setTriedToStart } from '../features/quiz/quizSlice'
+import { setAnswerSelected, setScore, setIndex, setTriedToStart, setAnsweredAllQuestions, setTimeLeft } from '../features/quiz/quizSlice'
+import Result from './Result';
 
 
 const decodeHTML = function (html) {
@@ -12,7 +13,7 @@ const decodeHTML = function (html) {
 export default function Question() {
 
   const goodSentencesList = ["Nice!", "Nailed It!", "Wow!", "Good Job!", "Great!", "Well Done!"];
-  const badSentencesList = ["Nope!", "0 IQ!", "Why? That Was Easy!", "You Stupid!", "Kidding Me?", "WTF?!", "Read Some Book For Sure!"];
+  const badSentencesList = ["Nope!", "0 IQ!", "Why? That Was Easy!", "Kidding Me?", "WTF?!", "Read Some Book For Sure!"];
   const [goodSentence, setGoodSentence] = useState("");
   const [badSentence, setBadSentence] = useState("");
 
@@ -28,19 +29,34 @@ export default function Question() {
   const answerSelected = useSelector(state => state.quiz.answerSelected);
   const triedToStart = useSelector(state => state.quiz.triedToStart);
   const loading = useSelector(state => state.quiz.quiz.loading);
+  const answeredAllQuestions = useSelector(state => state.quiz.answeredAllQuestions);
+  const timeLeft = useSelector(state => state.quiz.timeLeft);
 
-  const [timeLeft, setTimeLeft] = useState(encodedQuestions.length * 10);
+  const addDecimal = (number) => {
+    var str = number.toString();
+    var length = str.length;
 
-  const radius = 20;
+    if(length <= 2) {
+      return "0." + str;
+    } else {
+      var decimalIndex = length - 2;
+      var newStr = str.slice(0, decimalIndex) + "." + str.slice(decimalIndex)
+      
+      return newStr;
+    }
+  };
+
+
+  const radius = 40;
   const circumference = 2 * Math.PI * radius;
-  const progress = (((encodedQuestions.length * 10) - timeLeft) / (encodedQuestions.length * 10)) * 100;
+  const progress = (((encodedQuestions.length * 800) - timeLeft) / (encodedQuestions.length * 800)) * 100;
 
   const progressOffset = circumference - (progress / 100) * circumference;
 
   const progressBarStyle = {
     strokeDasharray: circumference,
     strokeDashoffset: progressOffset !== Infinity ? progressOffset : 0,
-    strokeWidth: 3,
+    strokeWidth: 5,
     stroke: "#565eff",
     fill: "transparent"
   };
@@ -48,12 +64,16 @@ export default function Question() {
   useEffect(() => {
     if (!timeLeft) return;
 
-    const timerId = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
+    if(!answerSelected && !answeredAllQuestions) {
+      const timerId = setInterval(() => {
+        dispatch(
+          setTimeLeft(timeLeft - 1)
+        )
+      }, 10);
 
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+      return () => clearInterval(timerId);
+    }
+  }, [timeLeft, answerSelected]);
 
   useEffect(() => {
     const decodedQuestions = encodedQuestions.map(q => {
@@ -65,7 +85,9 @@ export default function Question() {
       }
     })
     setQuestions(decodedQuestions);
-    setTimeLeft(encodedQuestions.length * 10); // if "encodedQuestions" changed new "timeLeft" would be generated
+    dispatch(
+      setTimeLeft(encodedQuestions.length * 800) // if "encodedQuestions" changed new "timeLeft" would be generated
+    )
   }, [encodedQuestions])
   
   const questionIndex = useSelector(state => state.quiz.index);
@@ -81,9 +103,9 @@ export default function Question() {
     if (!question) {
       return;
     }
-    let answers = [...question.incorrect_answers]
-    answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer)
-    setOptions(answers)
+    let answers = [...question.incorrect_answers];
+    answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer);
+    setOptions(answers);
 
     if(question.difficulty === "hard") {
       setDifficultyTextColor("#dc6060");
@@ -98,6 +120,22 @@ export default function Question() {
   
   const difficultyTextStyle = {
     color: difficultyTextColor
+  }
+
+  useEffect(() => {
+    if (questions.length) {
+      if (questionIndex + 1 > questions.length) {
+        dispatch(
+          setAnsweredAllQuestions(true)
+        )
+      }
+    }
+  }, [question])
+
+  if (answeredAllQuestions) {
+    return (
+      <Result />
+    )
   }
 
   const handleListItemClick = (event) => {
@@ -121,7 +159,7 @@ export default function Question() {
     if (event.target.textContent !== answer) {
       setBadSentence(badSentencesList[getRandomInt(badSentencesList.length)])
     }
-    if (questionIndex + 1 <= questions.length ) {
+    if (questionIndex + 1 <= questions.length) {
       setTimeout(() => {
         dispatch(
           setAnswerSelected(false)
@@ -179,23 +217,23 @@ export default function Question() {
       <div className="d-flex justify-content-between align-items-center">
         <p className="m-0">Question <span className="main-color">{questionIndex + 1}</span> Of <span className="main-color">{questions.length}</span></p>
 
-        <div style={{position: "relative", width: "50px", height: "50px"}} className="mb-2 d-flex justify-content-center align-items-center">
-          <svg viewBox="-5 -5 50 50" style={{transform: "rotate(-90deg)"}}>
+        <div style={{position: "relative", width: "60px", height: "60px"}} className="mb-2 d-flex justify-content-center align-items-center">
+          <svg viewBox="-5 -5 90 90" style={{transform: "rotate(-90deg)"}}>
             <circle
               r={radius}
-              cx="20"
-              cy="20"
-              style={{ stroke: "#d7dfff", strokeWidth: 3, fill: "transparent" }}
+              cx="40"
+              cy="40"
+              style={{ stroke: "#d7dfff", strokeWidth: 5, fill: "transparent" }}
             />
             <circle
               r={radius}
-              cx="20"
-              cy="20"
+              cx="40"
+              cy="40"
               style={progressBarStyle}
             />
           </svg>
 
-          <div style={{position: "absolute"}}>{timeLeft}</div>
+          <div style={{position: "absolute"}}>{addDecimal(timeLeft)}</div>
         </div>
       </div>
       <h4 className="fs-4 mb-3">{question.question}</h4>
