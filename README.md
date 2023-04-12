@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-Open [https://gregarious-salamander-7e1070.netlify.app](https://gregarious-salamander-7e1070.netlify.app) to view the project
-=======
-Open [https://gregarious-salamander-7e1070.netlify.app/](https://gregarious-salamander-7e1070.netlify.app/) to view the project
->>>>>>> 674c142 (update README.md)
+Open [https://strong-kelpie-1fa8b6.netlify.app](https://strong-kelpie-1fa8b6.netlify.app) to view the project
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
